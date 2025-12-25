@@ -1,4 +1,5 @@
 import { authStyle } from '@/assets/style/authStyle'
+import { getUserByEmail, getUsers } from '@/database/dataStore'
 import { Link, useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { Image, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native'
@@ -6,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const login = () => {
     const router=useRouter()
+    
     const [formData, setFormData] = useState({
       email: "",
       password: "",
@@ -21,8 +23,13 @@ const login = () => {
         ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
       }
       else{
-        ToastAndroid.show(`Submitted successfully! ${formData.email}`, ToastAndroid.SHORT);
-        router.push('/(userDashboard)/home')
+        const response=getUserByEmail(formData.email,formData.password)
+        if (response==200) {
+          ToastAndroid.show(`Login successfully!`, ToastAndroid.SHORT);
+          router.replace('/(userDashboard)/home')
+        }else{
+          ToastAndroid.show(`Wrong Credential`, ToastAndroid.SHORT);
+        }
       }
     }
     return (

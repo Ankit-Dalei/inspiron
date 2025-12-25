@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { splashScreenStyles } from '@/assets/style/splashScreenStyle'
+import { getAuthUsers } from '@/database/dataStore'
 
 const index = () => {
   const router=useRouter()
@@ -28,12 +29,19 @@ const index = () => {
         useNativeDriver: true,
       }),
     ]).start();
-    
-    const timer = setTimeout(() => {
-      router.replace("/login");
-    }, 4000);
-
-    return () => clearTimeout(timer);
+    const checker=getAuthUsers()
+    if (checker.status==200) {
+      const timer = setTimeout(() => {
+        router.replace("/home");
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+    else{
+      const timer = setTimeout(() => {
+        router.replace("/login");
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
   }, []);
   return(
     <SafeAreaView style={splashScreenStyles.container}>

@@ -1,11 +1,12 @@
 import { authStyle } from '@/assets/style/authStyle'
-import { storeData } from '@/database/dataStore'
-import { Link } from 'expo-router'
+import { insertUser } from '@/database/dataStore'
+import { Link, useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { Image, View, Text, TextInput, ToastAndroid, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const signup = () => {
+  const router=useRouter()
   const [formData, setFormData] = useState({
     email: "",
     username:"",
@@ -32,10 +33,12 @@ const signup = () => {
         ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
       }
       else{
-        ToastAndroid.show(`Submitted successfully!`, ToastAndroid.SHORT);   
-      }
-      // const response=storeData(formData)
-      // console.log(response)          
+        const response = insertUser(formData.username,formData.email,formData.phone,formData.password)
+        ToastAndroid.show(`Submitted successfully!`, ToastAndroid.SHORT);  
+        if (response==200) {
+          router.push('/login')
+        } 
+      }       
   }
   return (
     <SafeAreaView style={authStyle.container}>

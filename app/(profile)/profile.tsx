@@ -1,11 +1,19 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useRouter } from 'expo-router'
+import { logoutUser } from '@/database/dataStore'
 
 const profile = () => {
+  const router=useRouter()
+  const handellogout=()=>{
+    logoutUser()
+    router.replace('/login')
+  }
   return (
-    <View>
-      <Text>profile</Text>
-    </View>
+    <SafeAreaView>
+      <Text onPress={handellogout}>Logout</Text>
+    </SafeAreaView>
   )
 }
 
