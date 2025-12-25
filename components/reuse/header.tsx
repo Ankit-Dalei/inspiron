@@ -3,6 +3,7 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
 import { homeStyle } from '@/assets/style/home'
+import { Link } from 'expo-router'
 
 const Headercom = () => {
   return (
@@ -13,7 +14,7 @@ const Headercom = () => {
             source={require('../../assets/logo/Brand.png')}
           />
           <TouchableOpacity onPress={() => console.log('Profile clicked')}>
-            <Ionicons name="person-circle-outline" size={36} color="#0f172a" />
+            <Link href='/profile'><Ionicons name="person-circle-outline" size={36} color="#000000ff" /></Link>
           </TouchableOpacity>
         </View>
     </SafeAreaView>

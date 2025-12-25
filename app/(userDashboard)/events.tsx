@@ -1,14 +1,82 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Headercom from '@/components/reuse/header'
-import { homeStyle } from '@/assets/style/home'
+import { eventslist } from '@/assets/data/eventList'
+import { cardStyle } from '@/assets/style/cardStyle'
+import { Ionicons } from '@expo/vector-icons'
 
 const events = () => {
-  return (
-    <SafeAreaView style={homeStyle.container}>
-        <Headercom/>
-    </SafeAreaView>
+    const [numColumns,setNewColumns] = useState(2)
+    const [search,setSearch] = useState("")
+    const filteredData = eventslist.filter(item =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+    )
+    return (
+        <>
+            <Headercom/>
+            <SafeAreaView>
+                <View style={cardStyle.searchRow}>
+                  <TextInput
+                    style={cardStyle.input}
+                    placeholder="Search..."
+                    value={search}
+                    onChangeText={setSearch}
+                    autoCorrect={false}
+                    clearButtonMode="while-editing"
+                  />
+                  {
+                    numColumns==1?
+                    <TouchableOpacity onPress={() => setNewColumns(2)}>
+                    <Ionicons
+                      name="list-outline"
+                      size={24}
+                      color={numColumns === 1 ? '#2563eb' : '#94a3b8'}
+                    />
+                  </TouchableOpacity>
+                  :
+                  <TouchableOpacity onPress={() => setNewColumns(1)}>
+                    <Ionicons
+                      name="grid-outline"
+                      size={24}
+                      color={numColumns === 2 ? '#2563eb' : '#94a3b8'}
+                    />
+                  </TouchableOpacity>
+                  }
+                </View>
+                {numColumns==1?
+                    <FlatList
+                        key={numColumns}
+                        data={filteredData}
+                        keyExtractor={(item) => item.id.toString()}
+                        numColumns={numColumns}
+                        contentContainerStyle={{ paddingVertical: 12, paddingBottom: 100  }}
+                        renderItem={({ item }) => (
+                          <View style={cardStyle.card}>
+                            <Text style={cardStyle.title}>{item.name}</Text>
+                            <Text style={cardStyle.company}>Company: {item.company}</Text>
+                            <Text style={cardStyle.date}>Posted on: {item.date}</Text>
+                          </View>
+                        )}
+                    />
+                    :
+                    <FlatList
+                        key={numColumns}
+                        data={filteredData}
+                        keyExtractor={(item) => item.id.toString()}
+                        numColumns={numColumns}
+                        contentContainerStyle={{ paddingVertical: 12, paddingBottom: 100  }}
+                        renderItem={({ item }) => (
+                          <View style={cardStyle.card2}>
+                            <Text style={cardStyle.title}>{item.name}</Text>
+                            <Text style={cardStyle.company}>Company: {item.company}</Text>
+                            <Text style={cardStyle.date}>Posted on: {item.date}</Text>
+                          </View>
+                        )}
+                    />
+                }
+            </SafeAreaView>
+        </>
   )
 }
 

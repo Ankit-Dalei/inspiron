@@ -4,10 +4,11 @@ import 'react-native-reanimated';
 export default function RootLayout() {
 
   return (
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(userDashboard)" options={{ headerShown: false }} />
+      <Stack screenOptions={{headerShown:false}}>
+        <Stack.Screen name="index"/>
+        <Stack.Screen name="(auth)"/>
+        <Stack.Screen name="(userDashboard)"/>
+        <Stack.Screen name="(profile)"/>
       </Stack>
   );
 }
