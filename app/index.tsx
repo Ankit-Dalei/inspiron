@@ -28,7 +28,7 @@ const index = () => {
         useNativeDriver: true,
       }),
     ]).start();
-
+    
     const timer = setTimeout(() => {
       router.replace("/login");
     }, 4000);

@@ -11,8 +11,19 @@ const login = () => {
       password: "",
     });
     const handelSubmit = () =>{
-      ToastAndroid.show(`Submitted successfully! ${formData.email}`, ToastAndroid.SHORT);
-      router.push('/(userDashboard)/home')
+      if(formData.email==''){
+        ToastAndroid.show(`Email require`, ToastAndroid.SHORT);
+      }
+      else if(formData.password==''){
+        ToastAndroid.show(`Password require`, ToastAndroid.SHORT);
+      }
+      else if(formData.password.length==0 || formData.password.length<6){
+        ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
+      }
+      else{
+        ToastAndroid.show(`Submitted successfully! ${formData.email}`, ToastAndroid.SHORT);
+        router.push('/(userDashboard)/home')
+      }
     }
     return (
       <SafeAreaView style={authStyle.container}>

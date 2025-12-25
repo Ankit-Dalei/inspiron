@@ -11,7 +11,24 @@ const forgetPasword = () => {
     confirm_Password:"",
   });
   const handelSubmit = () =>{
-      ToastAndroid.show(`Submitted successfully!${formData}`, ToastAndroid.SHORT);
+    if(formData.email==''){
+      ToastAndroid.show(`Email require`, ToastAndroid.SHORT);
+    }
+    else if(formData.password==''){
+      ToastAndroid.show(`Password require`, ToastAndroid.SHORT);
+    }
+    else if(formData.password.length==0 || formData.password.length<6){
+      ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
+    }
+    else if(formData.confirm_Password.length==0 || formData.confirm_Password.length<6){
+      ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
+    }
+    else if(formData.password!==formData.confirm_Password){
+      ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
+    }
+    else{
+      ToastAndroid.show(`Submitted successfully!`, ToastAndroid.SHORT);
+    }
   }
   return (
     <SafeAreaView style={authStyle.container}>

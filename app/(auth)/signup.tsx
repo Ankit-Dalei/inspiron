@@ -1,4 +1,5 @@
 import { authStyle } from '@/assets/style/authStyle'
+import { storeData } from '@/database/dataStore'
 import { Link } from 'expo-router'
 import React, { useState } from 'react'
 import { Image, View, Text, TextInput, ToastAndroid, TouchableOpacity } from 'react-native'
@@ -12,7 +13,29 @@ const signup = () => {
     password: "",
   });
   const handelSubmit = () =>{
-      ToastAndroid.show(`Submitted successfully!${formData}`, ToastAndroid.SHORT);
+      if(formData.email==''){
+        ToastAndroid.show(`Email require`, ToastAndroid.SHORT);
+      }
+      else if(formData.username==''){
+        ToastAndroid.show(`Username require`, ToastAndroid.SHORT);
+      }
+      else if(formData.phone==''){
+        ToastAndroid.show(`Phone require`, ToastAndroid.SHORT);
+      }
+      else if(formData.phone.length==0 || formData.phone.length!=10){
+        ToastAndroid.show(`Enter 10 digit`, ToastAndroid.SHORT);
+      }
+      else if(formData.password==''){
+        ToastAndroid.show(`Password require`, ToastAndroid.SHORT);
+      }
+      else if(formData.password.length==0 || formData.password.length<6){
+        ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
+      }
+      else{
+        ToastAndroid.show(`Submitted successfully!`, ToastAndroid.SHORT);   
+      }
+      // const response=storeData(formData)
+      // console.log(response)          
   }
   return (
     <SafeAreaView style={authStyle.container}>
