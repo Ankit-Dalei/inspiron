@@ -1,5 +1,5 @@
 import { authStyle } from '@/assets/style/authStyle'
-import { getUserByEmail, getUsers } from '@/database/dataStore'
+import { getAuthUsers, getUserByEmail, getUsers } from '@/database/dataStore'
 import { Link, useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { Image, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native'
@@ -7,7 +7,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const login = () => {
     const router=useRouter()
-    
+    // console.log('getusers',getUsers())
+    // console.log('logsauthuser',getAuthUsers())
     const [formData, setFormData] = useState({
       email: "",
       password: "",

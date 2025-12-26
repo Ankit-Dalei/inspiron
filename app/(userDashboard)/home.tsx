@@ -4,10 +4,11 @@ import { eventslist } from '@/assets/data/eventList'
 import { traininglist } from '@/assets/data/tranningList'
 import { countByMonth } from '@/components/reuse/dashboardHelper'
 import DashboardChart from '@/components/reuse/DashboardChart'
+import { getAuthUsers } from '@/database/dataStore'
 const Home = () => {
   const eventChartData = countByMonth(eventslist)
   const trainingChartData = countByMonth(traininglist)
-
+console.log('getauthusers',getAuthUsers())
   return (
     <>
       <Headercom />

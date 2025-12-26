@@ -1,10 +1,12 @@
 import { authStyle } from '@/assets/style/authStyle'
-import { Link } from 'expo-router'
+import { updateUsers } from '@/database/dataStore'
+import { Link, useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { Image, View, Text, TextInput, ToastAndroid, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const forgetPasword = () => {
+  const router=useRouter()
   const [formData, setFormData] = useState({
     email:"",
     password:"",
@@ -12,22 +14,32 @@ const forgetPasword = () => {
   });
   const handelSubmit = () =>{
     if(formData.email==''){
-      ToastAndroid.show(`Email require`, ToastAndroid.SHORT);
+      ToastAndroid.show(`Email require 😒`, ToastAndroid.SHORT);
     }
     else if(formData.password==''){
-      ToastAndroid.show(`Password require`, ToastAndroid.SHORT);
+      ToastAndroid.show(`Password require 😒`, ToastAndroid.SHORT);
     }
     else if(formData.password.length==0 || formData.password.length<6){
-      ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
+      ToastAndroid.show(`Password length must be 6 or above 😒`, ToastAndroid.SHORT);
     }
     else if(formData.confirm_Password.length==0 || formData.confirm_Password.length<6){
-      ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
+      ToastAndroid.show(`Password length must be 6 or above 😒`, ToastAndroid.SHORT);
     }
     else if(formData.password!==formData.confirm_Password){
-      ToastAndroid.show(`Password length must be 6 or above`, ToastAndroid.SHORT);
+      ToastAndroid.show(`Password length must be 6 or above 😒`, ToastAndroid.SHORT);
     }
     else{
-      ToastAndroid.show(`Submitted successfully!`, ToastAndroid.SHORT);
+      try {
+        const response=updateUsers(formData.email,formData.password)
+        if (response==200) {
+          ToastAndroid.show(`Changeing successfully Done 😍!`, ToastAndroid.SHORT);
+          router.replace('/login')
+        } else {
+          ToastAndroid.show(`Something went wrong 😔`, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        ToastAndroid.show(`Error 😡: ${error}`, ToastAndroid.SHORT);
+      }
     }
   }
   return (

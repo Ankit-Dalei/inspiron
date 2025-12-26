@@ -50,13 +50,20 @@ export const getUserByEmail = (email: string, password:string) => {
   if (data==null) {
     return 404
   }else{
+    logoutUser()
     db.withTransactionSync(() => {
       db.runSync(
         'INSERT INTO authuser (email) VALUES (?);',
         [email]
       );
     });
-    return 200;
+    // console.log('data',data.password)
+    if (data?.password==password) {
+      return 200;
+    }else{
+      return 404;
+    }
+    
   }
 };
 
@@ -101,3 +108,21 @@ export const getAuthUsers = () => {
     };
   }
 };
+
+export const updateUsers = (email: string, password:string) => {
+  try {
+    const data=getUsers()
+    db.withTransactionSync(()=>{
+     db.runSync(
+       `UPDATE users
+       SET password = ?
+       WHERE email = ?;`,
+      [password, email]
+     )
+    })
+    // console.log('datauser',getUsers())
+    return 200;
+  } catch (error) {
+    return 404;
+  }
+}
