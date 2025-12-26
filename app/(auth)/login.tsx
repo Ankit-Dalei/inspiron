@@ -28,6 +28,10 @@ const login = () => {
         if (response==200) {
           ToastAndroid.show(`Login successfully!`, ToastAndroid.SHORT);
           router.replace('/(userDashboard)/home')
+        }
+        else if(response==404){
+          ToastAndroid.show(`Dont have any account 😤`, ToastAndroid.SHORT);
+          router.replace('/signup')
         }else{
           ToastAndroid.show(`Wrong Credential`, ToastAndroid.SHORT);
         }

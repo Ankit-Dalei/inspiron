@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { splashScreenStyles } from '@/assets/style/splashScreenStyle'
-import { getAuthUsers } from '@/database/dataStore'
+import { getAuthUsers, getUsers } from '@/database/dataStore'
 
 const index = () => {
   const router=useRouter()
@@ -30,6 +30,7 @@ const index = () => {
       }),
     ]).start();
     const checker=getAuthUsers()
+    // console.log(getUsers())
     if (checker.status==200) {
       const timer = setTimeout(() => {
         router.replace("/home");
